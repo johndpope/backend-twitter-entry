@@ -1,3 +1,4 @@
+
 export class MessageBody {
   access_token: string
 
@@ -36,18 +37,25 @@ export class MessageBody {
 export class Message {
 
   /**
+   * AWS SQS service.
+   *
+   * @var {AWS.SQS}
+   */
+  private sqs: AWS.SQS
+
+  /**
+   * SQS queue url.
+   *
+   * @var {string}
+   */
+  private queue: string
+
+  /**
    * Message body.
    *
    * @var {MessageBody}
    */
   private body: MessageBody
-
-  /**
-   * Message id.
-   *
-   * @var {string}
-   */
-  private id: string
 
   /**
    * Message receipt handle.
@@ -59,13 +67,53 @@ export class Message {
   /**
    * @constructor
    *
-   * @param {string} id
-   * @param {any} body
-   * @param {receipt} receipt
+   * @param {AWS.SQS} sqs
+   * @param {string} queue
+   * @param {any} content
    */
-  constructor (id: string, body: any, receipt: string) {
-    this.id = id
-    this.receipt = receipt
-    this.body = new MessageBody(body)
+  constructor (sqs: AWS.SQS, queue: string, content: any) {
+    this.sqs = sqs
+    this.queue = queue
+    this.receipt = content.ReceiptHandle
+    this.body = new MessageBody(JSON.parse(content.Body))
+  }
+
+  /**
+   * Changes visibility timeout of the message.
+   *
+   * @param {number} secs
+   * @return {Promise<any>}
+   */
+  public changeVisibility (secs: number) : Promise<any> {
+    const request: any = {
+      QueueUrl: this.queue,
+      ReceiptHandle: this.receipt,
+      VisibilityTimeout: secs,
+    }
+
+    return this.sqs.changeMessageVisibility(request).promise()
+  }
+
+  /**
+   * Deletes the message from queue.
+   *
+   * @return {Promise<any>}
+   */
+  public delete () : Promise<any> {
+    const request: any = {
+      QueueUrl: this.queue,
+      ReceiptHandle: this.receipt,
+    }
+
+    return this.sqs.deleteMessage(request).promise()
+  }
+
+  /**
+   * Getter for message body.
+   *
+   * @return {MessageBody}
+   */
+  public getBody () : MessageBody {
+    return this.body
   }
 }

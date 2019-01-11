@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 import * as AWS from 'aws-sdk'
 import { App } from './app/index'
-import { Listener } from './listener/Listener'
+import { Listener } from './core/Listener'
 
 dotenv.config()
 

@@ -8,9 +8,9 @@ export class App {
   /**
    * Queue polling interval.
    *
-   * @var {number}
+   * @constant {number}
    */
-  public static INTERVAL: number = 1000
+  public static INTERVAL: number = parseInt(process.env.POLLING_INTERVAL) || 1000
 
   /**
    * AWS SQS service.
@@ -121,11 +121,13 @@ export class App {
       .receiveMessage(new SqsRequest(this.queue))
       .promise()
 
+    if (!Array.isArray(Messages)) {
+      return
+    }
+
     for (const message of Messages) {
       try {
-        const { MessageId, Body, ReceiptHandle } = message
-
-        this.trigger('message', new Message(MessageId, JSON.parse(Body), ReceiptHandle))
+        this.trigger('message', new Message(this.sqs, this.queue, message))
       } catch (e) {
         this.trigger('error', e)
       }
