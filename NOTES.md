@@ -16,6 +16,14 @@ This service should be able to track the activity of Prizeprofile users and dist
 
 In order to achive that, we will have to implement some smarter rules than just the `x-rate-limit` headers checking.
 
+## Service evaluation function
+The `x-rate-limit` headers apply for future requests, we so need an object that holds temp user data about
+their previous actions. On building this object, we should call Twitters APIs for checking currect limitting. Then we can determine the delay for next request. Rate limits are easy to implement. This solution does not scale.
+
 ## Flows
 
 ### User to API
+`POST` -> `API GATEWAY` -> `Authorizer` -> `lambda-autoentry-push-to-sqs` -> `SQS`
+
+### Microservice to Twitter
+`SQS` -> `SERVICE:EVAL` -> `TWITTER` -> `SERVICE:UPDATE_STATE`

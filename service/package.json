@@ -2,10 +2,16 @@
   "name": "backend-twitter-entry",
   "version": "1.0.0",
   "description": "One click enter service for Twitter competitions.",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/main.js"
   },
   "author": "Michael Bausano",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^10.12.18",
+    "aws-sdk": "^2.387.0",
+    "dotenv": "^6.0.0",
+    "typescript": "^3.2.2"
+  }
 }
