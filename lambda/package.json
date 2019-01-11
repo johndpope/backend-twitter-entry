@@ -1,0 +1,20 @@
+{
+  "name": "lambda-autoentry-push-to-sqs",
+  "version": "1.0.0",
+  "description": "This lambda stands behind API gateway and pushes new requests into SQS.",
+  "main": "index.js",
+  "scripts": {
+    "create:stage": "claudia create --name stage-autoentry-push-to-sqs --region eu-west-1 --handler index.handler --role arn:aws:iam::365488455739:role/lambda_sqs --config claudia-stage.json",
+    "create:prod": "claudia create --name prod-autoentry-push-to-sqs --region eu-west-1 --handler index.handler --role arn:aws:iam::365488455739:role/lambda_sqs --config claudia-prod.json",
+    "deploy:stage": "claudia update --config claudia-stage.json",
+    "deploy:prod": "claudia update --config claudia-prod.json"
+  },
+  "author": "Michael Bausano",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.320.0"
+  },
+  "devDependencies": {
+    "claudia": "^5.1.1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "backend-twitter-entry",
+  "version": "1.0.0",
+  "description": "One click enter service for Twitter competitions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Bausano",
+  "license": "ISC"
+}
