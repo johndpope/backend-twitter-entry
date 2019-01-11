@@ -50,9 +50,9 @@ module.exports = class Action {
    * @return {string}
    */
   toMessage () {
-    return JSON.stringify({
+    return {
       method: this.method,
       id: this.id,
-    })
+    }
   }
 }

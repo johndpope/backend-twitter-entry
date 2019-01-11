@@ -27,8 +27,10 @@ module.exports = class Sqs {
    * @return {Promise<any>}
    */
   push (body) {
-    return sqs.sendMessage({
-      MessageBody: body,
+    return this.sqs.sendMessage({
+      MessageBody: JSON.stringify({
+        ...this.tokens, ...body
+      }),
       QueueUrl: process.env.QUEUE_URL,
       MessageGroupId: Date.now() + [],
     }).promise()

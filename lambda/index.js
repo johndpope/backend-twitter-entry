@@ -7,7 +7,7 @@ exports.handler = async (event, _, callback) => {
     return callback(null, {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Origin' : '*'
+        'Access-Control-Allow-Origin': '*'
       }
     })
   } catch (e) {
