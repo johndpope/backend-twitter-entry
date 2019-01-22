@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "One click enter service for Twitter competitions.",
   "scripts": {
-    "build": "tsc",
+    "build": "ttsc",
     "start": "node dist/main.js"
   },
   "author": "Michael Bausano",
@@ -13,6 +13,8 @@
     "aws-sdk": "^2.387.0",
     "dotenv": "^6.0.0",
     "oauth": "^0.9.15",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "@zerollup/ts-transform-paths": "^1.6.5",
+    "ttypescript": "^1.5.6"
   }
 }

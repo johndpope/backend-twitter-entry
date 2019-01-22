@@ -32,10 +32,10 @@ export class Action {
   /**
    * Posts authorized request to Twitter API.
    *
-   * @return {Promise<void>}
+   * @return {Promise<Response>}
    */
-  public perform () : Promise<any> {
-    return new Promise((resolve, reject) => {
+  public perform () : Promise<Response> {
+    return new Promise((resolve) => {
       const { url, params } = ActionBag.from(this.message.method, this.message.id)
 
       this.client.post(
@@ -44,7 +44,7 @@ export class Action {
         this.message.access_token_secret,
         params,
         null,
-        (error, body) => error ? reject(error) : resolve(body)
+        (...args) => resolve(new Response(...args))
       )
     })
   }

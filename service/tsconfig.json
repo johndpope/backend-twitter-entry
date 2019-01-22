@@ -12,10 +12,16 @@
     "target": "es6"
   },
   "include": [
-    "src/**/*",
-    "app/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
+  ],
+  "baseUrl": "src",
+  "paths": {
+    "@internal/config": ["config"]
+  },
+  "plugins": [
+    { "transform": "@zerollup/ts-transform-paths" }
   ]
 }
