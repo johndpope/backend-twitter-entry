@@ -28,4 +28,5 @@ export const TWITTER_CALLBACK_URI = env('TWITTER_CALLBACK_URI')
 
 export const WAIT_TIME = env('WAIT_TIME', '5')
 export const AWS_REGION = env('AWS_REGION', 'eu-west-1')
+export const POLLING_INTERVAL = env('POLLING_INTERVAL', '1000')
 export const VISIBILITY_TIMEOUT = env('VISIBILITY_TIMEOUT', '30')
