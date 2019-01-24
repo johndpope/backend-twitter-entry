@@ -68,7 +68,7 @@ export class QueueConsumer<T> {
    *
    * @return {boolean}
    */
-  public isRunning () : boolean {
+  public isPolling () : boolean {
     return this.runnable === undefined
   }
 
