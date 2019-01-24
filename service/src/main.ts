@@ -1,8 +1,7 @@
 import * as AWS from 'aws-sdk'
 import { config } from './configs/sqs'
-import { Action } from './action/Action'
+import { transform, Action } from './action'
 import { QueueConsumer } from './consumer'
-import transform from './action/transform'
 
 /**
  * Creates new sqs consumer with configuration loaded from

@@ -1,4 +1,4 @@
-import client from './Client'
+import { client } from './Client'
 import { Action } from './Action'
 import { Method } from './Method'
 import { ActionConfig } from './ActionConfig'
@@ -9,7 +9,7 @@ import { ActionConfig } from './ActionConfig'
  * @param {string} body
  * @return {}
  */
-export default (body: string) : Action => {
+export const transform: (body: string) => Action = (body) => {
   const content: any = JSON.parse(body)
 
   const method: Method = {

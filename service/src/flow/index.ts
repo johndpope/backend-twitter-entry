@@ -1,4 +1,4 @@
-import { Action } from '../action/Action'
+import { Action } from '../action'
 import { QueueMessage } from '../consumer'
 
 /**
