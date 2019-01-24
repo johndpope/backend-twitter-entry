@@ -1,16 +1,16 @@
 import * as AWS from 'aws-sdk'
-import { Message } from './Message'
 import { ListenerBag } from './ListenerBag'
-import { QueueConsumerRequest } from './QueueConsumerRequest'
+import { QueueMessage } from './QueueMessage'
+import { QueueConsumerConfig } from './QueueConsumerConfig'
 
-export class QueueConsumer {
+export class QueueConsumer<T> {
 
   /**
    * Listener bag to publish messages to.
    *
-   * @var {ListenerBag<Message>}
+   * @var {ListenerBag<QueueMessage>}
    */
-  public onMessage: ListenerBag<Message> = new ListenerBag()
+  public onMessage: ListenerBag<QueueMessage<T>> = new ListenerBag()
 
   /**
    * Listener bag to publish errors to.
@@ -30,11 +30,13 @@ export class QueueConsumer {
    * @constructor
    *
    * @param {AWS.SQS} sqs
-   * @param {QueueConsumerRequest} request
+   * @param {QueueConsumerConfig} request
+   * @param {(body: string) => T} transformer Transforms the message content body.
    */
   constructor (
     private sqs: AWS.SQS,
-    private request: QueueConsumerRequest
+    private request: QueueConsumerConfig,
+    private transformer: (body: string) => T
   ) {
     //
   }
@@ -73,9 +75,9 @@ export class QueueConsumer {
   /**
    * Polls the sqs and emits appropriate events.
    *
-   * @return {Promise<Message[]>}
+   * @return {Promise<QueueMessage[]>}
    */
-  private async poll () : Promise<Message[]> {
+  private async poll () : Promise<QueueMessage<T>[]> {
     const { Messages } = await this.sqs
       .receiveMessage(this.request)
       .promise()
@@ -84,6 +86,19 @@ export class QueueConsumer {
       return []
     }
 
-    return Messages.map(raw => new Message(this.sqs, this.request.QueueUrl, raw))
+    return Messages.map(raw => {
+      try {
+        // We transform the body with transformer. If the transformer
+        // throws an error, this message is skipped and an error message
+        // is dispatched.
+        const body: T = this.transformer(raw.Body)
+
+        return new QueueMessage<T>(this.sqs, this.request.QueueUrl, body, raw)
+      } catch (error) {
+        this.onError.dispatch(error)
+
+        return null
+      }
+    }).filter(Boolean)
   }
 }

@@ -1,22 +1,6 @@
 import { Response } from 'aws-sdk'
 
-export class Message {
-
-  /**
-   * Raw SQS message object.
-   *
-   * @var {AWS.SQS.Message}
-   */
-  public raw: AWS.SQS.Message
-
-  /**
-   * Message body string.
-   *
-   * @return {string}
-   */
-  public get body () : string {
-    return this.raw.Body
-  }
+export class QueueMessage<T> {
 
   /**
    * Message receipt handle.
@@ -37,7 +21,8 @@ export class Message {
   constructor (
     private sqs: AWS.SQS,
     private queue: string,
-    public content: AWS.SQS.Message
+    public body: T,
+    public raw: AWS.SQS.Message
   ) {
     //
   }
@@ -72,4 +57,3 @@ export class Message {
     return this.sqs.deleteMessage(request).promise()
   }
 }
-
