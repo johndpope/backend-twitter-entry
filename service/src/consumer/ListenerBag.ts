@@ -12,9 +12,12 @@ export class ListenerBag<T> {
    * Pushes a new listeners to the array.
    *
    * @param {(t: T) => void} listener
+   * @return {ListenerBag<T>}
    */
-  public addListener (listener: (t: T) => void) : void {
+  public addListener (listener: (t: T) => void) : ListenerBag<T> {
     this.listeners.push(listener)
+
+    return this
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Method } from '../enums/Method'
+import { Method } from './Method'
 
 export interface ActionConfig {
 
