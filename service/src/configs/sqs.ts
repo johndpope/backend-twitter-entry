@@ -1,4 +1,4 @@
-import { QueueConsumerConfig } from '../consumer'
+import { QueueConsumerConfig } from '@bausano/sqs-consumer'
 import { POLLING_INTERVAL, SQS_URL } from './index'
 
 export const config = new class implements QueueConsumerConfig {

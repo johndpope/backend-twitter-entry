@@ -1,5 +1,5 @@
 import { Action } from '../action'
-import { QueueMessage } from '../consumer'
+import { QueueMessage } from '@bausano/sqs-consumer'
 
 /**
  * Starts new flow with received message.
