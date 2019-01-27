@@ -10,11 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "@bausano/sqs-consumer": "^1.0.4",
-    "@types/node": "^10.12.18",
-    "@zerollup/ts-transform-paths": "^1.6.5",
     "aws-sdk": "^2.387.0",
     "dotenv": "^6.0.0",
-    "oauth": "^0.9.15",
+    "oauth": "^0.9.15"
+  },
+  "devDependencies": {
+    "@zerollup/ts-transform-paths": "^1.6.5",
+    "@types/node": "^10.12.18",
     "ttypescript": "^1.5.6",
     "typescript": "^3.2.2"
   }
